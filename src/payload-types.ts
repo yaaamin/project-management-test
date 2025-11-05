@@ -202,6 +202,7 @@ export interface Project {
    */
   parentProject?: (number | null) | Project;
   owner?: (number | null) | User;
+  members?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -254,6 +255,7 @@ export interface Comment {
   content: string;
   activity?: (number | null) | Activity;
   author: number | User;
+  type: 'staff' | 'policy_staff' | 'minister' | 'activity';
   updatedAt: string;
   createdAt: string;
 }
@@ -410,6 +412,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   budget?: T;
   parentProject?: T;
   owner?: T;
+  members?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -453,6 +456,7 @@ export interface CommentsSelect<T extends boolean = true> {
   content?: T;
   activity?: T;
   author?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }

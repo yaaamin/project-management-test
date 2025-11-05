@@ -155,6 +155,16 @@ export const Projects: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'members',
+      type: 'relationship',
+      relationTo: 'users',
+      required: false,
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
   timestamps: true,
 }

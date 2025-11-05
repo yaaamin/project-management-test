@@ -45,6 +45,30 @@ export const Comments: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'type',
+      type: 'select',
+      required: true,
+      admin: { position: 'sidebar' },
+      options: [
+        {
+          label: 'Staff',
+          value: 'staff',
+        },
+        {
+          label: 'Policy Staff',
+          value: 'policy_staff',
+        },
+        {
+          label: 'Minister',
+          value: 'minister',
+        },
+        {
+          label: 'Activity',
+          value: 'activity',
+        },
+      ],
+    },
   ],
   timestamps: true,
 }
