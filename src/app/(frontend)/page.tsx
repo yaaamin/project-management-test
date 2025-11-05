@@ -27,6 +27,7 @@ export default async function HomePage() {
             width={65}
           />
         </picture>
+        <h1>FUCK NEXTJS.</h1>
         {!user && <h1>Welcome to your new project.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
         <div className="links">
