@@ -109,16 +109,16 @@ export const Users: CollectionConfig = {
       defaultValue: true,
       label: 'Active',
     },
-    // {
-    //   name: 'lastLoginAt',
-    //   type: 'date',
-    //   label: 'Last Login',
-    //   admin: {
-    //     date: {
-    //       pickerAppearance: 'dayAndTime',
-    //     },
-    //   },
-    // },
+    {
+      name: 'lastLoginAt',
+      type: 'date',
+      label: 'Last Login',
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
   ],
   timestamps: true, // Adds createdAt and updatedAt automatically
 }

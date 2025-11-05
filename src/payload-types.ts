@@ -140,6 +140,7 @@ export interface User {
   department?: string | null;
   role: 'staff' | 'policy_staff' | 'admin';
   isActive?: boolean | null;
+  lastLoginAt?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -359,6 +360,7 @@ export interface UsersSelect<T extends boolean = true> {
   department?: T;
   role?: T;
   isActive?: T;
+  lastLoginAt?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
