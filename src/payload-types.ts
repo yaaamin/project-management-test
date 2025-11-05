@@ -69,6 +69,10 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    projects: Project;
+    activities: Activity;
+    'activity-assignments': ActivityAssignment;
+    comments: Comment;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +82,10 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
+    'activity-assignments': ActivityAssignmentsSelect<false> | ActivityAssignmentsSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -121,6 +129,18 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  /**
+   * Microsoft Entra ID (Azure AD) object id
+   */
+  aadObjectId: string;
+  displayName: string;
+  givenName?: string | null;
+  surname?: string | null;
+  jobTitle?: string | null;
+  department?: string | null;
+  role: 'staff' | 'policy_staff' | 'admin';
+  isActive?: boolean | null;
+  lastLoginAt?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -158,6 +178,87 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  /**
+   * Unique project identifier (e.g., PRJ-001)
+   */
+  code?: string | null;
+  name: string;
+  description?: string | null;
+  status: 'planned' | 'active' | 'on_hold' | 'completed' | 'cancelled';
+  priority?: ('low' | 'medium' | 'high' | 'urgent') | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  actualEndDate?: string | null;
+  /**
+   * Budget in USD
+   */
+  budget?: number | null;
+  /**
+   * If this is a sub-project, select the parent project
+   */
+  parentProject?: (number | null) | Project;
+  owner?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities".
+ */
+export interface Activity {
+  id: number;
+  name: string;
+  description?: string | null;
+  type: 'activity' | 'sub_activity';
+  status: 'not_started' | 'in_progress' | 'blocked' | 'done' | 'cancelled';
+  priority?: ('low' | 'medium' | 'high' | 'urgent') | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  actualEndDate?: string | null;
+  estimatedHours?: number | null;
+  actualHours?: number | null;
+  project: number | Project;
+  /**
+   * If this is a sub-activity, select the parent activity
+   */
+  parentActivity?: (number | null) | Activity;
+  owner?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity-assignments".
+ */
+export interface ActivityAssignment {
+  id: number;
+  activity: number | Activity;
+  user: number | User;
+  /**
+   * e.g., Lead, Contributor, Reviewer
+   */
+  role?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: number;
+  content: string;
+  activity?: (number | null) | Activity;
+  author: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -187,6 +288,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'activities';
+        value: number | Activity;
+      } | null)
+    | ({
+        relationTo: 'activity-assignments';
+        value: number | ActivityAssignment;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: number | Comment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -235,6 +352,15 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  aadObjectId?: T;
+  displayName?: T;
+  givenName?: T;
+  surname?: T;
+  jobTitle?: T;
+  department?: T;
+  role?: T;
+  isActive?: T;
+  lastLoginAt?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -267,6 +393,68 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  code?: T;
+  name?: T;
+  description?: T;
+  status?: T;
+  priority?: T;
+  startDate?: T;
+  endDate?: T;
+  actualEndDate?: T;
+  budget?: T;
+  parentProject?: T;
+  owner?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities_select".
+ */
+export interface ActivitiesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  type?: T;
+  status?: T;
+  priority?: T;
+  startDate?: T;
+  endDate?: T;
+  actualEndDate?: T;
+  estimatedHours?: T;
+  actualHours?: T;
+  project?: T;
+  parentActivity?: T;
+  owner?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity-assignments_select".
+ */
+export interface ActivityAssignmentsSelect<T extends boolean = true> {
+  activity?: T;
+  user?: T;
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  content?: T;
+  activity?: T;
+  author?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
