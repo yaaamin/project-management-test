@@ -108,6 +108,9 @@ export const Users: CollectionConfig = {
       type: 'checkbox',
       defaultValue: true,
       label: 'Active',
+      admin: {
+        position: 'sidebar',
+      },
     },
     // {
     //   name: 'lastLoginAt',
