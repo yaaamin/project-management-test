@@ -165,6 +165,8 @@ export const Projects: CollectionConfig = {
         position: 'sidebar',
       },
     },
+
+    { name: 'files', type: 'upload', relationTo: 'media', hasMany: true },
   ],
   timestamps: true,
 }

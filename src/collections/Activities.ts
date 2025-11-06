@@ -197,6 +197,7 @@ export const Activities: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    { name: 'files', type: 'upload', relationTo: 'media', hasMany: true },
   ],
   timestamps: true,
 }

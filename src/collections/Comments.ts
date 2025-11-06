@@ -69,6 +69,7 @@ export const Comments: CollectionConfig = {
         },
       ],
     },
+    { name: 'files', type: 'upload', relationTo: 'media', hasMany: true },
   ],
   timestamps: true,
 }

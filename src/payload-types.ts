@@ -202,6 +202,7 @@ export interface Project {
   parentProject?: (number | null) | Project;
   owner?: (number | null) | User;
   members?: (number | User)[] | null;
+  files?: (number | Media)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -227,6 +228,7 @@ export interface Activity {
    */
   parentActivity?: (number | null) | Activity;
   owner?: (number | null) | User;
+  files?: (number | Media)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -255,6 +257,7 @@ export interface Comment {
   activity?: (number | null) | Activity;
   author: number | User;
   type: 'staff' | 'policy_staff' | 'minister' | 'activity';
+  files?: (number | Media)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -411,6 +414,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   parentProject?: T;
   owner?: T;
   members?: T;
+  files?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -432,6 +436,7 @@ export interface ActivitiesSelect<T extends boolean = true> {
   project?: T;
   parentActivity?: T;
   owner?: T;
+  files?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -455,6 +460,7 @@ export interface CommentsSelect<T extends boolean = true> {
   activity?: T;
   author?: T;
   type?: T;
+  files?: T;
   updatedAt?: T;
   createdAt?: T;
 }
