@@ -46,11 +46,14 @@ export const Users: CollectionConfig = {
 
           // console.log(JSON.stringify(tokenResponse, null, 2))
 
-          const tokens = await tokenResponse.json()
+          const tokens = (await tokenResponse.json()) as {
+            access_token: string
+            [key: string]: any
+          }
 
           // Get user info
           const userResponse = await fetch('https://graph.microsoft.com/v1.0/me', {
-            headers: { Authorization: `Bearer ${tokens.access_token}` },
+            headers: { Authorization: `Bearer ${tokens?.access_token}` },
           })
 
           type GraphUser = {
@@ -71,10 +74,10 @@ export const Users: CollectionConfig = {
           const userData = (await userResponse.json()) as GraphUser
 
           // Find or create user in Payload
-          let user = await req.payload.find({
+          let user = (await req.payload.find({
             collection: 'users',
             where: { microsoftId: { equals: userData.id } },
-          })
+          })) as any
 
           if (user.docs.length === 0) {
             const array = new Uint8Array(32)
