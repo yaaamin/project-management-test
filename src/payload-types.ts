@@ -132,7 +132,7 @@ export interface User {
   /**
    * Microsoft Entra ID (Azure AD) object id
    */
-  aadObjectId: string;
+  aadObjectId?: string | null;
   displayName: string;
   givenName?: string | null;
   surname?: string | null;
@@ -140,6 +140,7 @@ export interface User {
   department?: string | null;
   role: 'staff' | 'policy_staff' | 'admin';
   isActive?: boolean | null;
+  microsoftId?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -364,6 +365,7 @@ export interface UsersSelect<T extends boolean = true> {
   department?: T;
   role?: T;
   isActive?: T;
+  microsoftId?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
