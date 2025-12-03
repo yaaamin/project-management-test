@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "project-management-test",
+  "name": "another-test",
   "compatibility_date": "2025-08-15",
   "account_id": "63797b4510fbc2255e58745eddd3d916",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
